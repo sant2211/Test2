@@ -1,0 +1,25 @@
+name: CI Pipeline with security and quality scans
+on:
+  push:
+    branches: [dev]
+    pull_request:
+      brances: [dev]
+      jobs:
+        biuld_test:
+          runs-on: ubuntu-latest
+          steps:
+            # checkout code for dev branch
+            - name: checkout code
+              uses: actions/checkout@v5.0.0
+            - name: setup node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18
+                
+            - name: install dependencies
+               run:npm install
+            - name: run tests
+              run: |
+                mkdir-p test-results
+                npm test -- --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/results.xml
+                
