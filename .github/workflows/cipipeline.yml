@@ -2,9 +2,9 @@ name: CI Pipeline with security and quality scans
 on:
   push:
     branches: [dev]
-    pull_request:
-      brances: [dev]
-      jobs:
+  pull_request:
+    branches: [dev]
+jobs:
         biuld_test:
           runs-on: ubuntu-latest
           steps:
@@ -17,9 +17,9 @@ on:
                 node-version: 18
                 
             - name: install dependencies
-               run:npm install
+              run: npm install
             - name: run tests
               run: |
-                mkdir-p test-results
+                mkdir -p test-results
                 npm test -- --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/results.xml
                 
